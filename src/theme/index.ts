@@ -26,29 +26,28 @@ export const colorToken = {
     800: '#0d1522',
     900: '#070b11',
   },
-  secondary:{
-    100: "#e8f5f8",
-    200: "#d2ebf1",
-    300: "#bbe1eb",
-    400: "#a5d7e4",
-    500: "#8ecddd",
-    600: "#72a4b1",
-    700: "#557b85",
-    800: "#395258",
-    900: "#1c292c"
-
+  secondary: {
+    100: '#e8f5f8',
+    200: '#d2ebf1',
+    300: '#bbe1eb',
+    400: '#a5d7e4',
+    500: '#8ecddd',
+    600: '#72a4b1',
+    700: '#557b85',
+    800: '#395258',
+    900: '#1c292c',
   },
   yellow: {
-    100: "#fff5e2",
-    200: "#ffebc6",
-    300: "#ffe0a9",
-    400: "#ffd68d",
-    500: "#ffcc70",
-    600: "#cca35a",
-    700: "#997a43",
-    800: "#66522d",
-    900: "#332916"
-},
+    100: '#fff5e2',
+    200: '#ffebc6',
+    300: '#ffe0a9',
+    400: '#ffd68d',
+    500: '#ffcc70',
+    600: '#cca35a',
+    700: '#997a43',
+    800: '#66522d',
+    900: '#332916',
+  },
 };
 
 export const themeSetting = () => {
@@ -61,7 +60,7 @@ export const themeSetting = () => {
         light: colorToken.primary[400],
         contrastText: '#fff',
       },
-      secondary:{
+      secondary: {
         ...colorToken.secondary,
         main: colorToken.secondary[500],
         dark: colorToken.secondary[600],
@@ -74,10 +73,10 @@ export const themeSetting = () => {
       neutral: {
         ...colorToken.grey,
       },
-      yellow:{
+      yellow: {
         ...colorToken.yellow,
-        main: colorToken.yellow[500]
-      }
+        main: colorToken.yellow[500],
+      },
     },
     typography: {
       fontFamily: ['Inter', 'sans-serif'].join(','),
@@ -110,4 +109,51 @@ export const themeSetting = () => {
   };
 };
 
+interface Icolors {
+  main: string;
+  0: string;
+  50: string;
+  100: string;
+  200: string;
+  300: string;
+  400: string;
+  500: string;
+  600: string;
+  700: string;
+  800: string;
+  900: string;
+}
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    yellow: Omit<Icolors, 0 | 50>;
+    neutral: Omit<Icolors, 'main'>;
+  }
+
+  interface PaletteOptions {
+    yellow?: PaletteOptions['primary'];
+    neutral?: PaletteOptions['primary'];
+  }
+  interface PaletteColor {
+    100: string;
+    200: string;
+    300: string;
+    400: string;
+    500: string;
+    600: string;
+    700: string;
+    800: string;
+    900: string;
+  }
+  interface SimplePaletteColorOptions {
+    100?: string;
+    200?: string;
+    300?: string;
+    400?: string;
+    500?: string;
+    600?: string;
+    700?: string;
+    800?: string;
+    900?: string;
+  }
+}

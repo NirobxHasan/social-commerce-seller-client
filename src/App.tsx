@@ -1,4 +1,4 @@
-import {Button, CssBaseline, ThemeProvider, createTheme} from '@mui/material';
+import {Button, CssBaseline, Theme, ThemeProvider, createTheme} from '@mui/material';
 import Layout from './components/layout';
 import {themeSetting} from './theme';
 import { BrowserRouter,Routes,Route ,Navigate} from 'react-router-dom';

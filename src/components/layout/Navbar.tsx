@@ -1,4 +1,3 @@
-import {Theme} from '@emotion/react';
 import {DarkModeOutlined, Menu} from '@mui/icons-material';
 import {AppBar, Toolbar, useTheme} from '@mui/material';
 import {FlexBetween} from '../../styled/customFlexStyle';
@@ -6,11 +5,11 @@ import {CustomIconButton} from '../../styled/customIconButton';
 
 interface NavbarProps {
   isSidebarOpen: boolean;
-  setIsSidebarOpen: () => void;
+  setIsSidebarOpen: Function;
 }
 
 function Navbar({isSidebarOpen, setIsSidebarOpen}: NavbarProps) {
-  const theme: Theme = useTheme();
+  const theme = useTheme();
 
   return (
     <AppBar
@@ -20,7 +19,7 @@ function Navbar({isSidebarOpen, setIsSidebarOpen}: NavbarProps) {
         justifyContent: 'center',
         background: 'none',
         boxShadow: 'none',
-        backgroundColor: theme.palette.grey[100],
+        backgroundColor: theme.palette.neutral[200],
       }}
     >
       <Toolbar sx={{justifyContent: 'space-between'}}>
