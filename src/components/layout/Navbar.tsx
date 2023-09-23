@@ -20,7 +20,7 @@ function Navbar({isSidebarOpen, setIsSidebarOpen}: NavbarProps) {
         justifyContent: 'center',
         background: 'none',
         boxShadow: 'none',
-        backgroundColor: theme.palette.primary[100],
+        backgroundColor: theme.palette.grey[100],
       }}
     >
       <Toolbar sx={{justifyContent: 'space-between'}}>

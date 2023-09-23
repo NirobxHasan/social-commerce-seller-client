@@ -26,6 +26,29 @@ export const colorToken = {
     800: '#0d1522',
     900: '#070b11',
   },
+  secondary:{
+    100: "#e8f5f8",
+    200: "#d2ebf1",
+    300: "#bbe1eb",
+    400: "#a5d7e4",
+    500: "#8ecddd",
+    600: "#72a4b1",
+    700: "#557b85",
+    800: "#395258",
+    900: "#1c292c"
+
+  },
+  yellow: {
+    100: "#fff5e2",
+    200: "#ffebc6",
+    300: "#ffe0a9",
+    400: "#ffd68d",
+    500: "#ffcc70",
+    600: "#cca35a",
+    700: "#997a43",
+    800: "#66522d",
+    900: "#332916"
+},
 };
 
 export const themeSetting = () => {
@@ -38,13 +61,23 @@ export const themeSetting = () => {
         light: colorToken.primary[400],
         contrastText: '#fff',
       },
+      secondary:{
+        ...colorToken.secondary,
+        main: colorToken.secondary[500],
+        dark: colorToken.secondary[600],
+        light: colorToken.secondary[300],
+      },
       background: {
         default: colorToken.grey[0],
         alt: colorToken.grey[50],
       },
-      grey: {
+      neutral: {
         ...colorToken.grey,
       },
+      yellow:{
+        ...colorToken.yellow,
+        main: colorToken.yellow[500]
+      }
     },
     typography: {
       fontFamily: ['Inter', 'sans-serif'].join(','),
@@ -76,3 +109,5 @@ export const themeSetting = () => {
     },
   };
 };
+
+
