@@ -1,16 +1,29 @@
 import {ChevronLeft, HomeMaxOutlined} from '@mui/icons-material';
-import {Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Typography, useTheme} from '@mui/material';
-import {FlexBetween} from '../../styled/customFlexStyle';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
-import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import Groups2OutlinedIcon from '@mui/icons-material/Groups2Outlined';
+import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
 import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
+import {
+  Box,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+  useTheme,
+} from '@mui/material';
+import {useLocation, useNavigate} from 'react-router-dom';
+import {FlexBetween} from '../../styled/customFlexStyle';
 function Sidebar({isSidebarOpen, setIsSidebarOpen, drawerWidth, isNonMobile}) {
   const theme = useTheme();
+  const {pathname} = useLocation();
+  const navigate = useNavigate();
+
   return (
     <Box>
       {isSidebarOpen && (
@@ -52,31 +65,41 @@ function Sidebar({isSidebarOpen, setIsSidebarOpen, drawerWidth, isNonMobile}) {
               </FlexBetween>
             </Box>
             <List>
-
-              {
-                navItem.map(({text, icon})=> (
-                  <ListItem key={text} disablePadding sx={{my:'0.6rem'}}>
-              <ListItemButton sx={{ color: theme.palette.secondary.light}}>
-                <ListItemIcon sx={{ color: theme.palette.secondary.light , ml:'2rem'}}>
-                  {icon}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-                ))
-              }
-          
-            <ListItem  disablePadding>
-              <ListItemButton sx={{ backgroundColor: theme.palette.secondary.main, color: theme.palette.primary.main, '&:hover': {
-                backgroundColor: theme.palette.secondary.light
-              }}}>
-                <ListItemIcon sx={{ color: theme.palette.primary.main,ml:'2rem'}}>
-                  {4 % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={'text'} sx={{ }}/>
-              </ListItemButton>
-            </ListItem>
-        </List>
+              {navItem.map(({text, route, icon}) => (
+                <ListItem key={text} disablePadding sx={{my: '0.6rem'}}>
+                  <ListItemButton
+                    onClick={() => navigate(route)}
+                    sx={
+                      route !== pathname
+                        ? {
+                            color: theme.palette.secondary.light,
+                            '&:hover': {
+                              backgroundColor: theme.palette.primary[600],
+                            },
+                          }
+                        : {
+                            backgroundColor: theme.palette.secondary.main,
+                            color: theme.palette.primary.main,
+                            '&:hover': {
+                              backgroundColor: theme.palette.secondary.light,
+                            },
+                          }
+                    }
+                  >
+                    <ListItemIcon
+                      sx={{
+                        color:
+                          route === pathname ? 'primary' : 'secondary.light',
+                        ml: '2rem',
+                      }}
+                    >
+                      {icon}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
           </Box>
         </Drawer>
       )}
@@ -86,40 +109,46 @@ function Sidebar({isSidebarOpen, setIsSidebarOpen, drawerWidth, isNonMobile}) {
 
 export default Sidebar;
 
-
-
 const navItem = [
   {
-    text:'Dashboard',
-    icon: <HomeMaxOutlined/>
+    text: 'Dashboard',
+    route: '/dashboard',
+    icon: <HomeMaxOutlined />,
   },
   {
-    text:'Live Orders',
-    icon: <LocalShippingOutlinedIcon />
+    text: 'Live Orders',
+    route: '/order',
+    icon: <LocalShippingOutlinedIcon />,
   },
   {
-    text:'Product',
-    icon: < ProductionQuantityLimitsOutlinedIcon/>
+    text: 'Product',
+    route: '/product',
+    icon: <ProductionQuantityLimitsOutlinedIcon />,
   },
   {
-    text:'Category',
-    icon: <CategoryOutlinedIcon />
+    text: 'Category',
+    route: '/category',
+    icon: <CategoryOutlinedIcon />,
   },
   {
-    text:'Inventory',
-    icon: <InventoryOutlinedIcon/>
+    text: 'Inventory',
+    route: '/intventory',
+    icon: <InventoryOutlinedIcon />,
   },
-  
+
   {
-    text:'Customers',
-    icon: <Groups2OutlinedIcon/>
-  },
-  {
-    text:' Order History',
-    icon: <ListAltOutlinedIcon/>
+    text: 'Customers',
+    route: '/customers',
+    icon: <Groups2OutlinedIcon />,
   },
   {
-    text:' Store',
-    icon: <ListAltOutlinedIcon/>
+    text: ' Order History',
+    route: '/order-history',
+    icon: <ListAltOutlinedIcon />,
   },
-]
+  {
+    text: ' Store',
+    route: '/store',
+    icon: <ListAltOutlinedIcon />,
+  },
+];
