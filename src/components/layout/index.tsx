@@ -1,8 +1,8 @@
-import {Box, useMediaQuery} from '@mui/material';
+import {Box, Container, useMediaQuery} from '@mui/material';
 import {useState} from 'react';
+import {Outlet} from 'react-router-dom';
 import Navbar from './Navbar';
 import Sidebar from './Sidebar';
-import { Outlet } from 'react-router-dom'
 function Layout() {
   const isNonMobile = useMediaQuery('(min-width: 600px)');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -20,7 +20,9 @@ function Layout() {
             isSidebarOpen={isSidebarOpen}
             setIsSidebarOpen={setIsSidebarOpen}
           />
-          <Outlet/>
+          <Container maxWidth='xl' sx={{marginTop: '0.3rem'}}>
+            <Outlet />
+          </Container>
         </Box>
       </Box>
     </div>

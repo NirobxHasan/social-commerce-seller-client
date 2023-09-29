@@ -56,7 +56,7 @@ export const themeSetting = () => {
       primary: {
         ...colorToken.primary,
         main: colorToken.primary[500],
-        dark: colorToken.primary[400],
+        dark: colorToken.primary[600],
         light: colorToken.primary[400],
         contrastText: '#fff',
       },
