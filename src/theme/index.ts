@@ -105,6 +105,10 @@ export const themeSetting = () => {
         fontFamily: ['Inter', 'sans-serif'].join(','),
         fontSize: 14,
       },
+      subtitle2: {
+        fontFamily: ['Inter', 'sans-serif'].join(','),
+        fontSize: 10,
+      },
     },
   };
 };
