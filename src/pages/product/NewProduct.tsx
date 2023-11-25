@@ -1,19 +1,15 @@
 import P5 from '@/components/typography/P5';
 import AddIcon from '@mui/icons-material/Add';
-import {
-  Box,
-  FormControlLabel,
-  Grid,
-  Stack,
-  Switch,
-  TextField,
-} from '@mui/material';
+import {Box, Grid, TextField} from '@mui/material';
 import {useRef, useState} from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {PageHeader} from '../../styled/CustomTypography';
 import {PaperContainer} from '../../styled/PaperContainer';
 import {FlexCenter, FlexStart} from '../../styled/customFlexStyle';
-import {CustomButtonPrimary} from '../../styled/customIconButton';
+import {
+  CustomButtonPrimary,
+  CustomButtonSecondary,
+} from '../../styled/customIconButton';
 type Inputs = {
   name: string;
   price: number;
@@ -45,21 +41,7 @@ function NewProduct() {
       const file = e.target.files[0];
       setImages((prevImages) => [...prevImages, file]);
     }
-    // const file = e.target.files[0];
-    // if (file) {
-    //   const reader = new FileReader();
-    //   reader.onload = () => {
-    //     setImage(reader.result);
-    //   };
-    //   reader.readAsDataURL(file);
-    // }
   };
-
-  const showImage = (file: File) => {
-    const reader = new FileReader();
-    return reader.readAsDataURL(file);
-  };
-  console.log(images);
 
   const handleImageClick = () => {
     inputRef.current.click();
@@ -206,7 +188,7 @@ function NewProduct() {
             <Grid item md={6} xs={12}>
               <P5 item=' Upload 500 *500 image for best output.' />
 
-              <FlexStart>
+              <FlexStart mt={'12px'}>
                 {images.map((image, index) => (
                   <img
                     key={index}
@@ -248,23 +230,10 @@ function NewProduct() {
             </Grid>
           </Grid>
 
-          <Box>
-            <FormControlLabel
-              value='end'
-              control={
-                <Switch
-                  color='primary'
-                  onChange={(e) => console.log(e.target.checked)}
-                />
-              }
-              label='Add Stock'
-              labelPlacement='end'
-            />
-          </Box>
-
-          <Stack mt={'20px'}>
+          <FlexStart mt={'12px'}>
             <CustomButtonPrimary type='submit'>Create</CustomButtonPrimary>
-          </Stack>
+            <CustomButtonSecondary>Back</CustomButtonSecondary>
+          </FlexStart>
         </Box>
       </PaperContainer>
     </>

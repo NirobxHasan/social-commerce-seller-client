@@ -127,6 +127,7 @@ export const themeSetting = () => {
 };
 
 interface Icolors {
+  white: string;
   main: string;
   0: string;
   50: string;

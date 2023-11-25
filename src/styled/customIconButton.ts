@@ -9,11 +9,11 @@ export const CustomIconButton = styled(IconButton)(({theme}) => ({
 }));
 
 export const CustomButtonPrimary = styled(Button)(({theme}) => ({
-  color: theme.palette.neutral[0],
+  color: theme.palette.neutral.white,
   backgroundColor: theme.palette.primary.main,
-  padding: '6px 15px',
+  padding: '6px 20px',
 
-  borderRadius: '10px',
+  borderRadius: '8px',
   '&:hover': {
     backgroundColor: theme.palette.primary.dark,
   },
@@ -21,9 +21,9 @@ export const CustomButtonPrimary = styled(Button)(({theme}) => ({
 
 export const CustomButtonSecondary = styled(Button)(({theme}) => ({
   color: theme.palette.primary.dark,
-  backgroundColor: theme.palette.secondary.main,
-  padding: '6px 15px',
-  borderRadius: '10px',
+  backgroundColor: theme.palette.secondary[200],
+  padding: '6px 20px',
+  borderRadius: '8px',
   '&:hover': {
     backgroundColor: theme.palette.secondary.dark,
   },

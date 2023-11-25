@@ -12,6 +12,7 @@ export const FlexStart = styled(Box)(() => ({
   justifyContent: 'flex-start',
   alignItems: 'center',
   flexWrap: 'wrap',
+  gap: '10px',
 }));
 
 export const FlexCenter = styled(Box)(() => ({
