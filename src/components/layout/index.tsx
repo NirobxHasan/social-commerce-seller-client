@@ -11,7 +11,7 @@ function Layout() {
       <Box display={isNonMobile ? 'flex' : 'block'} height='100%' width='100%'>
         <Sidebar
           isNonMobile={isNonMobile}
-          drawerWidth='250px'
+          drawerWidth='280px'
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         />

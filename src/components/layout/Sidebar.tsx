@@ -1,5 +1,7 @@
 import {ChevronLeft, HomeMaxOutlined} from '@mui/icons-material';
 import CategoryOutlinedIcon from '@mui/icons-material/CategoryOutlined';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 import Groups2OutlinedIcon from '@mui/icons-material/Groups2Outlined';
 import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
 import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
@@ -7,6 +9,7 @@ import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined
 import ProductionQuantityLimitsOutlinedIcon from '@mui/icons-material/ProductionQuantityLimitsOutlined';
 import {
   Box,
+  Collapse,
   Drawer,
   IconButton,
   List,
@@ -17,13 +20,18 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
+import {useState} from 'react';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {FlexBetween} from '../../styled/customFlexStyle';
 function Sidebar({isSidebarOpen, setIsSidebarOpen, drawerWidth, isNonMobile}) {
   const theme = useTheme();
   const {pathname} = useLocation();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
+  const handleToggle = () => {
+    setOpen(!open);
+  };
   return (
     <Box>
       {isSidebarOpen && (
@@ -65,40 +73,53 @@ function Sidebar({isSidebarOpen, setIsSidebarOpen, drawerWidth, isNonMobile}) {
               </FlexBetween>
             </Box>
             <List>
-              {navItem.map(({text, route, icon}) => (
-                <ListItem key={text} disablePadding sx={{my: '0.6rem'}}>
-                  <ListItemButton
-                    onClick={() => navigate(route)}
-                    sx={
-                      route !== pathname
-                        ? {
-                            color: theme.palette.secondary.light,
-                            '&:hover': {
-                              backgroundColor: theme.palette.primary[600],
-                            },
-                          }
-                        : {
-                            backgroundColor: theme.palette.secondary.main,
-                            color: theme.palette.primary.main,
-                            '&:hover': {
-                              backgroundColor: theme.palette.secondary.light,
-                            },
-                          }
-                    }
-                  >
-                    <ListItemIcon
-                      sx={{
-                        color:
-                          route === pathname ? 'primary' : 'secondary.light',
-                        ml: '2rem',
-                      }}
+              {navItem.map(({text, route, icon, subItem}) => {
+                if (subItem) {
+                  return (
+                    <ItemWihSubItem
+                      text={text}
+                      route={route}
+                      icon={icon}
+                      subItem={subItem}
+                      key={text}
+                    />
+                  );
+                }
+                return (
+                  <ListItem key={text} disablePadding sx={{my: '0.6rem'}}>
+                    <ListItemButton
+                      onClick={() => navigate(route)}
+                      sx={
+                        route !== pathname
+                          ? {
+                              color: theme.palette.secondary.light,
+                              '&:hover': {
+                                backgroundColor: theme.palette.primary[600],
+                              },
+                            }
+                          : {
+                              backgroundColor: theme.palette.secondary.main,
+                              color: theme.palette.primary.main,
+                              '&:hover': {
+                                backgroundColor: theme.palette.secondary.light,
+                              },
+                            }
+                      }
                     >
-                      {icon}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
+                      <ListItemIcon
+                        sx={{
+                          color:
+                            route === pathname ? 'primary' : 'secondary.light',
+                          ml: '2rem',
+                        }}
+                      >
+                        {icon}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItemButton>
+                  </ListItem>
+                );
+              })}
             </List>
           </Box>
         </Drawer>
@@ -122,8 +143,25 @@ const navItem = [
   },
   {
     text: 'Product',
-    route: '/product',
+    route: '/',
     icon: <ProductionQuantityLimitsOutlinedIcon />,
+    subItem: [
+      {
+        text: 'Add Product',
+        route: '/product/newproduct',
+        icon: <CategoryOutlinedIcon />,
+      },
+      {
+        text: 'Addon',
+        route: '/product/addon',
+        icon: <CategoryOutlinedIcon />,
+      },
+      {
+        text: 'Product List',
+        route: '/product',
+        icon: <InventoryOutlinedIcon />,
+      },
+    ],
   },
   {
     text: 'Category',
@@ -152,3 +190,87 @@ const navItem = [
     icon: <ListAltOutlinedIcon />,
   },
 ];
+
+const ItemWihSubItem = ({text, route, icon, subItem}: any) => {
+  const theme = useTheme();
+  const {pathname} = useLocation();
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+  return (
+    <>
+      <ListItem key={text} disablePadding sx={{my: '0.6rem'}}>
+        <ListItemButton
+          onClick={handleToggle}
+          sx={
+            route !== pathname
+              ? {
+                  color: theme.palette.secondary.light,
+                  '&:hover': {
+                    backgroundColor: theme.palette.primary[600],
+                  },
+                }
+              : {
+                  backgroundColor: theme.palette.secondary.main,
+                  color: theme.palette.primary.main,
+                  '&:hover': {
+                    backgroundColor: theme.palette.secondary.light,
+                  },
+                }
+          }
+        >
+          <ListItemIcon
+            sx={{
+              color: route === pathname ? 'primary' : 'secondary.light',
+              ml: '2rem',
+            }}
+          >
+            {icon}
+          </ListItemIcon>
+          <ListItemText primary={text} />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItemButton>
+      </ListItem>
+      <Collapse in={open} timeout={300} unmountOnExit>
+        <List component='div' disablePadding>
+          {subItem.map(({text, route, icon}) => (
+            <ListItem key={text} disablePadding sx={{my: '0.4rem'}}>
+              <ListItemButton
+                onClick={() => navigate(route)}
+                sx={
+                  route !== pathname
+                    ? {
+                        color: theme.palette.secondary.light,
+                        '&:hover': {
+                          backgroundColor: theme.palette.primary[600],
+                        },
+                      }
+                    : {
+                        backgroundColor: theme.palette.secondary.main,
+                        color: theme.palette.primary.main,
+                        '&:hover': {
+                          backgroundColor: theme.palette.secondary.light,
+                        },
+                      }
+                }
+              >
+                <ListItemIcon
+                  sx={{
+                    color: route === pathname ? 'primary' : 'secondary.light',
+                    ml: '3rem',
+                  }}
+                >
+                  {icon}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Collapse>
+    </>
+  );
+};
