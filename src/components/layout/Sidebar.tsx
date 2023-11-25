@@ -49,6 +49,18 @@ function Sidebar({isSidebarOpen, setIsSidebarOpen, drawerWidth, isNonMobile}) {
               boxSizing: 'border-box',
               borderWidth: isNonMobile ? 0 : '2px',
               width: drawerWidth,
+              overflowY: 'auto',
+              scrollbarWidth: 'thin', // For Firefox
+              '&::-webkit-scrollbar': {
+                width: '5px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: (theme) => theme.palette.secondary[600],
+                borderRadius: '8px',
+              },
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: 'primary',
+              },
             },
           }}
         >
