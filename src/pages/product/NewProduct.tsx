@@ -1,10 +1,18 @@
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import {Box, Grid, Stack, TextField, Typography} from '@mui/material';
+import P5 from '@/components/typography/P5';
+import AddIcon from '@mui/icons-material/Add';
+import {
+  Box,
+  FormControlLabel,
+  Grid,
+  Stack,
+  Switch,
+  TextField,
+} from '@mui/material';
 import {useRef, useState} from 'react';
 import {Controller, SubmitHandler, useForm} from 'react-hook-form';
 import {PageHeader} from '../../styled/CustomTypography';
 import {PaperContainer} from '../../styled/PaperContainer';
-import {FlexCenter} from '../../styled/customFlexStyle';
+import {FlexCenter, FlexStart} from '../../styled/customFlexStyle';
 import {CustomButtonPrimary} from '../../styled/customIconButton';
 type Inputs = {
   name: string;
@@ -29,19 +37,29 @@ function NewProduct() {
     formState: {errors},
   } = useForm<Inputs>();
 
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState<File[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setImages((prevImages) => [...prevImages, file]);
     }
+    // const file = e.target.files[0];
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onload = () => {
+    //     setImage(reader.result);
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
+
+  const showImage = (file: File) => {
+    const reader = new FileReader();
+    return reader.readAsDataURL(file);
+  };
+  console.log(images);
 
   const handleImageClick = () => {
     inputRef.current.click();
@@ -53,7 +71,7 @@ function NewProduct() {
       <PageHeader>Create a new product </PageHeader>
       <PaperContainer>
         <Box component={'form'} onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={5} alignItems='center'>
+          <Grid container spacing={5}>
             <Grid item md={6} xs={12}>
               <Controller
                 name='name'
@@ -185,70 +203,65 @@ function NewProduct() {
                 )}
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexDirection: 'column',
-              }}
-            >
-              <Box
-                sx={{
-                  cursor: 'pointer',
-                  border: '2px dashed grey',
-                  width: '300px',
-                  height: '300px',
-                  position: 'relative',
-                }}
-                onClick={handleImageClick}
-              >
-                <input
-                  accept='image/*'
-                  ref={inputRef}
-                  type='file'
-                  onChange={handleImageUpload}
-                  style={{display: 'none'}}
-                />
-                {image ? (
+            <Grid item md={6} xs={12}>
+              <P5 item=' Upload 500 *500 image for best output.' />
+
+              <FlexStart>
+                {images.map((image, index) => (
                   <img
-                    src={image}
-                    alt='Uploaded'
+                    key={index}
+                    src={URL.createObjectURL(image)}
+                    alt={`Image ${index + 1}`}
                     style={{
-                      position: 'absolute',
-                      left: 0,
-                      top: 0,
-                      width: '300px',
-                      height: '300px',
-                      objectFit: 'cover',
+                      maxWidth: '100%',
+                      maxHeight: '150px',
+                      margin: '5px',
                     }}
                   />
-                ) : (
-                  <FlexCenter
-                    sx={{
-                      height: '100%',
-                    }}
-                  >
-                    <CloudUploadIcon
+                ))}
+                <Box
+                  sx={{
+                    cursor: 'pointer',
+                    border: '2px dashed grey',
+                    width: '150px',
+                    height: '150px',
+                  }}
+                  onClick={handleImageClick}
+                >
+                  <input
+                    accept='image/*'
+                    ref={inputRef}
+                    type='file'
+                    onChange={handleImageUpload}
+                    style={{display: 'none'}}
+                  />
+                  <FlexCenter height={'100%'} width={'100%'}>
+                    <AddIcon
                       sx={{
-                        fontSize: 22,
-                        marginRight: '5px',
+                        fontSize: '5rem',
+                        color: (theme) => theme.palette.neutral[400],
                       }}
                     />
-                    <Typography variant='subtitle1'>
-                      Click to Upload Image
-                    </Typography>
                   </FlexCenter>
-                )}
-              </Box>
-              <Typography variant='subtitle2' p={'5px'}>
-                Upload 500 *500 image for best output.
-              </Typography>
+                </Box>
+              </FlexStart>
             </Grid>
           </Grid>
+
+          <Box>
+            <FormControlLabel
+              value='end'
+              control={
+                <Switch
+                  color='primary'
+                  onChange={(e) => console.log(e.target.checked)}
+                />
+              }
+              label='Add Stock'
+              labelPlacement='end'
+            />
+          </Box>
+
           <Stack mt={'20px'}>
             <CustomButtonPrimary type='submit'>Create</CustomButtonPrimary>
           </Stack>

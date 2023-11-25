@@ -18,8 +18,19 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
-  "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/theme/base-theme-options.js",
+    "src/components/navbar/lawyer/sidebar-data.js",
+    "src/interface/typings.d.ts"
+  ],
+  "exclude": ["node_modules"],
+  "references": [{"path": "./tsconfig.node.json"}]
 }

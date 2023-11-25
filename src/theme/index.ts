@@ -1,4 +1,17 @@
 export const colorToken = {
+  neutral: {
+    900: '#030303',
+    800: '#080808',
+    700: '#111111',
+    600: '#191919 ',
+    500: '#212121',
+    400: '#4D4D4D',
+    300: '#7A7A7A',
+    200: '#A6A6A6',
+    100: '#D3D3D3',
+    50: '#E9E9E9',
+    white: '#FFFFFF',
+  },
   grey: {
     0: '#ffffff', // manually adjusted
     10: '#f6f6f6', // manually adjusted
@@ -71,7 +84,7 @@ export const themeSetting = () => {
         alt: colorToken.grey[50],
       },
       neutral: {
-        ...colorToken.grey,
+        ...colorToken.neutral,
       },
       yellow: {
         ...colorToken.yellow,
